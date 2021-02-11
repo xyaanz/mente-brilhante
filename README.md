@@ -15,7 +15,7 @@ Aplicativo desenvolvido para avaliação no 4º semestre do cusro técnologo An�
 ### Login:
 <img src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/login.png?raw=true" data-canonical-src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/login.png?raw=true" width="378" height="672" />
 
-### Registro
+### Registro:
 <img src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/register.png?raw=true" data-canonical-src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/register.png?raw=true" width="378" height="672" />
 
 ### Home:
