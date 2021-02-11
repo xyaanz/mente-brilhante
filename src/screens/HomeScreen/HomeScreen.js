@@ -7,41 +7,92 @@ import { LineChart, Path } from 'react-native-svg-charts'
 import { Circle, Defs, Stop, LinearGradient } from 'react-native-svg'
 import DropdownMenu from 'react-native-dropdown-menu';
 
-
-
 export default function HomeScreen({props, navigation}) {
 
+ const [bolsaPoints, setBolsaPoints] = useState([])
+ const [bolsaVariation, setBolsaVariation] = useState([])
+ const [bolsa, setBolsa] = useState('IBOVESPA')
+ const [bidi, setBidi] = useState([])
+ const [bidiVariation, setBidiVariation] = useState([])
+ const [itsa, setItsa] = useState([])
+ const [itsaVariation, setItsaVariation] = useState([])
+ const [mglu, setMglu] = useState([])
+ const [mgluVariation, setMgluVariation] = useState([])
+ const [mrve, setMrve] = useState([])
+ const [mrveVariation, setMrveVariation] = useState([])
 
-    const [acoes, setAcoes] = useState([])
-    //const [acao, setAcao] = useState('')
+ useEffect(() => {
+ async function getItems() {
+ try {
+ const { data } = await api.get("quotations?key=2282e783")
+ if (bolsa === 'IBOVESPA') {
+ setBolsaPoints(data.results.stocks.IBOVESPA.points)
+ setBolsaVariation(data.results.stocks.IBOVESPA.variation)
+ } else if (bolsa === 'NASDAQ') {
+ setBolsaPoints(data.results.stocks.NASDAQ.points)
+ setBolsaVariation(data.results.stocks.NASDAQ.variation)
+ }
+ } catch (error) {
+ alert('Ocorreu um erro ao buscar os items')
+ }
+}
+getItems()
+}, [bolsa])
 
+useEffect(() => {
+    async function getItems() {
+    const { data } = await api.get('stock_price?key=2282e783&symbol=bidi4')
+    try {
+    setBidi(data.results.BIDI4.price)
+    setBidiVariation(data.results.BIDI4.change_percent)
+    } catch (error) {
+    alert(error)
+    }
+    }
+    getItems()
+    }, [])
+  
+useEffect(() => {
+    async function getItems() {
+            const { data } = await api.get('stock_price?key=2282e783&symbol=itsa4')
+        try {
+            setItsa(data.results.ITSA4.price)
+            setItsaVariation(data.results.ITSA4.change_percent)
+        } catch (error) {
+            alert(error)
+        }
+    }
+    getItems()
+}, [])
 
-    //useEffect(() => {
-    //    api.get('stock_price?key=d81dd1f8&symbol=' + acao).then(res => {
-    //              const acaoPonto = '.' + acao
-    //              console.log(setAcao)
-    //               setAcoes(res.data.results.BIDI4)
-    //            }).catch(error => console.log(error))
-   // },[setAcao])
+useEffect(() => {
+    async function getItems() {
+            const { data } = await api.get('stock_price?key=2282e783&symbol=mglu3')
+        try {
+             setMglu(data.results.MGLU3.price)
+            setMgluVariation(data.results.MGLU3.change_percent)
+        } catch (error) {
+            alert(error)
+        }
+    }
+    getItems()
+}, [])
 
-    useEffect(() => {
-        api.get('stock_price?key=8fe225c7&symbol=bidi4').then(res => {
-        setAcoes(res.data.results.BIDI4)
-        }).catch(error => console.log(error))
-      },[])
+useEffect(() => {
+    async function getItems() {
+            const { data } = await api.get('stock_price?key=2282e783&symbol=mrve3')
+        try {
+            setMrve(data.results.MRVE3.price)
+            setMrveVariation(data.results.MRVE3.change_percent)
+        } catch (error) {
+            alert(error)
+        }
+    }
+    getItems()
+}, [])
 
-    //const selectAcao = () => {
-     //   api.get('stock_price?key=d81dd1f8&symbol=' + acao).then(res => {
-     //       const acaoPonto = '.' + acao
-     //       console.log(acaoPonto)
-     //       setAcoes(res.data.results)
-     //    }).catch(error => console.log(error))
-   //  }
-
-
-
-    const data = [ 1.2, 1.6, -1.2, 0.9, 1.4]
-    const acoesData = [["BIDI4", "ITSA4", "PETR4", "MGLU3"]];
+    const data = [ 1.2, 1.6, 0.0, 0.9, bolsaVariation]
+    const acoesData = [["IBOVESPA", "NASDAQ"]];
 
     const Decorator = ({ x, y, data }) => {
         return data.map((value, index) => (
@@ -65,7 +116,6 @@ export default function HomeScreen({props, navigation}) {
         </Defs>
     )
 
-
     const Shadow = ({ line }) => (
         <Path
             key={'shadow'}
@@ -73,22 +123,19 @@ export default function HomeScreen({props, navigation}) {
             d={line}
             fill={'none'}
             strokeWidth={8}
-            stroke={ 'rgba(134, 65, 244, .2)' }
+            stroke={ 'rgba(22, 105, 255, 0.2)' }
         />
-    )
+    ) 
 
     const onAcoesBrPress = () => {
-        navigation.navigate('AcoesBr')
+            navigation.navigate('AcoesBr')
     }
-
     const onAcoesEuaPress = () => {
         navigation.navigate('AcoesEua')
     }
-
     const onFundosImobiliariosPress = () => {
         navigation.navigate('FundosImobiliarios')
     }
-
     const onCaixaPress = () => {
         navigation.navigate('Caixa')
     }
@@ -96,82 +143,112 @@ export default function HomeScreen({props, navigation}) {
     return (
         <View style={styles.container}>
             <View style={styles.menuContainer}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={onCaixaPress}>
-                    <Text style={styles.txtBtn}>Empreendedorismo</Text>                    
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnMenu} onPress={onAcoesBrPress}>
-                    <Text style={styles.txtBtn} >Ações</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnMenu} onPress={onAcoesEuaPress}>
-                    <Text style={styles.txtBtn}>Investimentos Internacionais</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnMenu} onPress={onFundosImobiliariosPress}>
-                    <Text style={styles.txtBtn}>Fundo Imobiliario</Text>    
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnMenu} onPress={onCaixaPress}>
-                    <Text style={styles.txtBtn}>Caixa</Text>                    
-                </TouchableOpacity>
-            </ScrollView>
-            </View>
-            <View style={styles.bidenContainer}>
-                <Image style={styles.biden} source={require('../../../assets/biden.jpg')} />
-            </View>
-            <View style={styles.graphic}>
-                <View style={styles.headerGraphic}>
-                    <View style={styles.statsGraphic}>
-                        <Text>{acoes.change_percent}</Text>
-                        <Text>{acoes.price}</Text>
+            <Text style={styles.menuArrows}>{"<"}</Text>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
+        style={styles.menu}>
+            <TouchableOpacity style={styles.btnMenu} onPress={onAcoesBrPress}>
+                <Text style={styles.txtBtn} >Ações</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnMenu} onPress={onAcoesEuaPress}>
+                <Text style={styles.txtBtn}>Investimentos Internacionais</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnMenu} onPress={onFundosImobiliariosPress}>
+                <Text style={styles.txtBtn}>Fundo Imobiliario</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnMenu} onPress={onCaixaPress}>
+                <Text style={styles.txtBtn}>Caixa</Text>
+            </TouchableOpacity>
+        </ScrollView>
+        <Text style={styles.menuArrows}>{">"}</Text>
+        </View>
+        <View style={styles.bidenContainer}>
+            <Image style={styles.biden} source={require('../../../assets/biden.jpg')} />
+        </View>
+        <View style={styles.graphic}>
+            <View style={styles.headerGraphic}>
+                <View style={styles.statsGraphic}>
+                    <View style={styles.bolsaPoints}>
+                        <Text style={styles.txtPoints}>PONTOS</Text>
+                        <Text style={styles.nmbPoints}>{bolsaPoints}</Text>
                     </View>
-                    <View style={styles.pickerContainer}>
-                        <DropdownMenu
-                        style={{flex: 1}}
-                        bgColor={'rgba(134, 65, 244, .2)'}
-                        tintColor={'#000'}
-                        activityTintColor={'rgb(66, 194, 244)'}
-                        // arrowImg={}      
-                        // checkImage={}   
-                        // optionTextStyle={{color: '#333333'}}
-                        // titleStyle={{color: '#333333'}} 
-                        // maxHeight={300} 
-                        handler={ (selection, row) => setAcao(acoesData[selection][row])}
-                        data={acoesData}
-                        >
-                        </DropdownMenu>
-                    </View>    
+                    <View style={styles.bolsaVariationContainer}>
+                        <View style={styles.bolsaVariation}>
+                            <Text style={styles.variation}>{bolsaVariation}</Text>
+                        </View>
+                    </View>
                 </View>
-                <LineChart
+                <View style={styles.pickerContainer}>
+                    <DropdownMenu
+                        style={{flex: 1}}
+                        bgColor={'rgba(22, 105, 255, 0.9)'}
+                        tintColor={'#FFF'}
+                        activityTintColor={'#FFF'}
+                        // arrowImg={}
+                        // checkImage={}
+                        //optionTextStyle={{color: '#333333'}}
+                        //titleStyle={{color: '#333333'}}
+                        // maxHeight={300}
+                        handler={ (selection, row) => setBolsa(acoesData[selection][row])}
+                        data={acoesData}
+                    >
+                    </DropdownMenu>
+                </View>
+            </View>
+            <LineChart
                 style={{ height: 75, zIndex: -1 }}
                 data={data}
-                svg={{ 
+                svg={{
                     strokeWidth: 2,
-                    stroke: 'url(#gradient)', 
+                    stroke: 'url(#gradient)',
                 }}
                 contentInset={{ top: 20, bottom: 20, left: 6, right: 6 }}
-                >
-                    <Decorator/>
-                    <Shadow/>
-                    <Gradient/>
-                </LineChart>
-            </View>
-            <View style={styles.footerContainer}>
-                <View style={styles.footerLeft}>
-                    <View style={styles.footerBox}>
-                    
-                    </View>
-                    <View style={styles.div}>
-
-                    </View>
-                    <View style={styles.footerBox}>
-                    
-                    </View>
+            >
+                <Decorator/>
+                <Shadow/>
+                <Gradient/>
+            </LineChart>
+        </View>
+        <View style={styles.footerContainer}>
+            <View style={styles.footerLeft}>
+                <View style={styles.footerBox}>
+                    <Image style={styles.imageFooter} source={require('../../../assets/xp.png')} />
                 </View>
-                <View style={styles.footerRight}>
-                    <View style={styles.footerStats}>
-
-                    </View>
+                <View style={styles.div}>
+                </View>
+                <View style={styles.footerBox}>
+                    <Image style={styles.imageFooter} source={require('../../../assets/xp.png')} />
+            </View>
+        </View>
+        <View style={styles.footerRight}>
+            <View style={styles.footerStats}>
+                <View style={styles.statsDesc}>
+                    <Text style={styles.titleDesc}>NOME</Text>
+                    <Text style={styles.titleDesc}>PREÇO</Text>
+                    <Text style={styles.titleDesc}>VARIAÇÃO</Text>
+                </View>
+                <View style={styles.statsDesc}>
+                    <Text style={styles.statsDescSym}>BIDI4</Text>
+                    <Text style={styles.statsDescPrc}>{bidi}</Text>
+                    <Text style={styles.statsDescVrt}>{bidiVariation}</Text>
+                </View>
+                <View style={styles.statsDesc}>
+                    <Text style={styles.statsDescSym}>ITSA4</Text>
+                    <Text style={styles.statsDescPrc}>{itsa}</Text>
+                    <Text style={styles.statsDescVrt}>{itsaVariation}</Text>
+                </View>
+                <View style={styles.statsDesc}>
+                    <Text style={styles.statsDescSym}>MGLU3</Text>
+                    <Text style={styles.statsDescPrc}>{mglu}</Text>
+                    <Text style={styles.statsDescVrt}>{mgluVariation}</Text>
+                </View> 
+                <View style={styles.statsDesc}>
+                    <Text style={styles.statsDescSym}>MRVE3</Text>
+                    <Text style={styles.statsDescPrc}>{mrve}</Text>
+                    <Text style={styles.statsDescVrt}>{mrveVariation}</Text>
                 </View>
             </View>
         </View>
-    )
+    </View>
+ </View>
+ )
 }
