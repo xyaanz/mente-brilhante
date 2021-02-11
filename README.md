@@ -13,16 +13,16 @@ Aplicativo desenvolvido para avaliação no 4º semestre do cusro técnologo An�
 ## Imagens
 
 ### Login:
-![login](https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/login.png?raw=true)
+<img src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/login.png?raw=true" data-canonical-src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/login.png?raw=true" width="378" height="672" />
 
 ### Registro
-![register](https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/register.png?raw=true)
+<img src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/register.png?raw=true" data-canonical-src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/register.png?raw=true" width="378" height="672" />
 
 ### Home:
-![home](https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/home.png?raw=true)
+<img src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/home.png?raw=true" data-canonical-src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/home.png?raw=true" width="378" height="672" />
 
 ### Página:
-![page](https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/page.png?raw=true)
+<img src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/page.png?raw=true" data-canonical-src="https://github.com/xyaanz/mente-brilhante/blob/main/SCREENSHOTS/page.png?raw=true" width="378" height="672" />
 
 
 
